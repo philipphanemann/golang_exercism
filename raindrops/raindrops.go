@@ -1,0 +1,21 @@
+package raindrops
+
+import "fmt"
+
+// Convert converts positive integer into dropping sound
+func Convert(n int) string {
+	res := ""
+	if n%3 == 0 {
+		res += "Pling"
+	}
+	if n%5 == 0 {
+		res += "Plang"
+	}
+	if n%7 == 0 {
+		res += "Plong"
+	}
+	if res == "" {
+		res = fmt.Sprint(n)
+	}
+	return res
+}
