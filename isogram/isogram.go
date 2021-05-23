@@ -6,16 +6,19 @@ import "strings"
 func IsIsogram(word string) bool {
 	word = strings.ToLower(word)
 
-	for _, character := range word {
-		characterString := string(character)
+	counter := map[rune]bool{}
 
-		if strings.ContainsAny(characterString, "- ") {
+	for _, r := range word {
+		if r == ' ' || r == '-' {
 			continue
 		}
-		counts := strings.Count(word, characterString)
-		if counts > 1 {
+
+		_, err := counter[r]
+
+		if err {
 			return false
 		}
+		counter[r] = true
 	}
 	return true
 }
