@@ -6,19 +6,18 @@ import "strings"
 func IsIsogram(word string) bool {
 	word = strings.ToLower(word)
 
-	counter := map[rune]bool{}
+	repeated := map[rune]bool{}
 
 	for _, r := range word {
 		if r == ' ' || r == '-' {
 			continue
 		}
 
-		_, err := counter[r]
-
-		if err {
+		if repeated[r] {
 			return false
 		}
-		counter[r] = true
+
+		repeated[r] = true
 	}
 	return true
 }
