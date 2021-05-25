@@ -10,6 +10,13 @@ func ReverseString(s string) string {
 	return string(reversed)
 }
 
+func CalcValue(r rune, i int) int {
+	if i%2 == 1 {
+		return int(r - '0')
+	}
+	return 7
+}
+
 func Valid(s string) bool {
 	return true
 }

@@ -13,6 +13,16 @@ func TestReverseString(t *testing.T) {
 
 }
 
+func TestCalcValue(t *testing.T) {
+	t.Run("odd tested stays same", func(t *testing.T) {
+		got := CalcValue('6', 3)
+		want := 6
+		if got != want {
+			t.Errorf("got: %d wanted: %d", got, want)
+		}
+	})
+}
+
 func TestValid(t *testing.T) {
 	for _, test := range testCases {
 		if ok := Valid(test.input); ok != test.ok {
