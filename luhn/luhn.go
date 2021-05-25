@@ -14,13 +14,13 @@ func CalcValue(r rune, i int) int {
 	val := int(r - '0')
 	if i%2 == 1 {
 		return int(r - '0')
-	} else {
-		if val < 5 {
-			return 2 * val
-		}
 	}
 
-	return 7
+	if twoVal := 2 * val; twoVal < 10 {
+		return twoVal
+	} else {
+		return twoVal - 9
+	}
 }
 
 func Valid(s string) bool {

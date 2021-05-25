@@ -28,6 +28,13 @@ func TestCalcValue(t *testing.T) {
 			t.Errorf("got: %d wanted: %d", got, want)
 		}
 	})
+	t.Run("even tested sum ABOVE 4", func(t *testing.T) {
+		got := CalcValue('7', 2)
+		want := 5
+		if got != want {
+			t.Errorf("got: %d wanted: %d", got, want)
+		}
+	})
 }
 
 func TestValid(t *testing.T) {
