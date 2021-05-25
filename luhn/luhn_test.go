@@ -21,6 +21,13 @@ func TestCalcValue(t *testing.T) {
 			t.Errorf("got: %d wanted: %d", got, want)
 		}
 	})
+	t.Run("even tested sum below 9", func(t *testing.T) {
+		got := CalcValue('4', 10)
+		want := 8
+		if got != want {
+			t.Errorf("got: %d wanted: %d", got, want)
+		}
+	})
 }
 
 func TestValid(t *testing.T) {

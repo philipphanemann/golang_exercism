@@ -11,9 +11,15 @@ func ReverseString(s string) string {
 }
 
 func CalcValue(r rune, i int) int {
+	val := int(r - '0')
 	if i%2 == 1 {
 		return int(r - '0')
+	} else {
+		if val < 5 {
+			return 2 * val
+		}
 	}
+
 	return 7
 }
 
