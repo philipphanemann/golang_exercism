@@ -24,5 +24,20 @@ func CalcValue(r rune, i int) int {
 }
 
 func Valid(s string) bool {
-	return true
+
+	if len(s) <= 1 {
+		return false
+	}
+	reversed := ReverseString(s)
+
+	var sum int
+	for i, r := range reversed {
+		sum += CalcValue(r, i)
+	}
+
+	if sum%10 == 0 {
+		return true
+	}
+	return false
+
 }
