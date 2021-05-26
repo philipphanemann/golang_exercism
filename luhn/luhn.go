@@ -1,5 +1,10 @@
 package luhn
 
+import (
+	"strings"
+	"unicode"
+)
+
 func ReverseString(s string) string {
 	N := len(s)
 	reversed := make([]rune, N)
@@ -12,8 +17,8 @@ func ReverseString(s string) string {
 
 func CalcValue(r rune, i int) int {
 	val := int(r - '0')
-	if i%2 == 1 {
-		return int(r - '0')
+	if i%2 == 0 {
+		return val
 	}
 
 	if twoVal := 2 * val; twoVal < 10 {
@@ -25,6 +30,7 @@ func CalcValue(r rune, i int) int {
 
 func Valid(s string) bool {
 
+	s = strings.ReplaceAll(s, " ", "")
 	if len(s) <= 1 {
 		return false
 	}
@@ -32,6 +38,10 @@ func Valid(s string) bool {
 
 	var sum int
 	for i, r := range reversed {
+		if !unicode.IsDigit(r) {
+			return false
+		}
+
 		sum += CalcValue(r, i)
 	}
 
