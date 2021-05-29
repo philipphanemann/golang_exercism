@@ -2,17 +2,6 @@ package luhn
 
 import "testing"
 
-func TestReverseString(t *testing.T) {
-	word := "hans"
-	got := ReverseString(word)
-	want := "snah"
-
-	if got != want {
-		t.Errorf("got: %s wanted: %s", got, want)
-	}
-
-}
-
 func TestCalcValue(t *testing.T) {
 	t.Run("odd tested stays same", func(t *testing.T) {
 		got := CalcValue('6', false)

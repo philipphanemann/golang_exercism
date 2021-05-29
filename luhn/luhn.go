@@ -36,9 +36,6 @@ func Valid(s string) bool {
 		sum += CalcValue(r, i%2 == doublePosition)
 	}
 
-	if sum%10 == 0 {
-		return true
-	}
-	return false
+	return sum%10 == 0
 
 }
