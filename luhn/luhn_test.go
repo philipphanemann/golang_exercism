@@ -15,21 +15,21 @@ func TestReverseString(t *testing.T) {
 
 func TestCalcValue(t *testing.T) {
 	t.Run("odd tested stays same", func(t *testing.T) {
-		got := CalcValue('6', 2)
+		got := CalcValue('6', false)
 		want := 6
 		if got != want {
 			t.Errorf("got: %d wanted: %d", got, want)
 		}
 	})
 	t.Run("even tested sum below 9", func(t *testing.T) {
-		got := CalcValue('4', 11)
+		got := CalcValue('4', true)
 		want := 8
 		if got != want {
 			t.Errorf("got: %d wanted: %d", got, want)
 		}
 	})
 	t.Run("even tested sum ABOVE 4", func(t *testing.T) {
-		got := CalcValue('7', 3)
+		got := CalcValue('7', true)
 		want := 5
 		if got != want {
 			t.Errorf("got: %d wanted: %d", got, want)

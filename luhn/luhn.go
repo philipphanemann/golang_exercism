@@ -5,19 +5,9 @@ import (
 	"unicode"
 )
 
-func ReverseString(s string) string {
-	N := len(s)
-	reversed := make([]rune, N)
-
-	for i, r := range s {
-		reversed[N-i-1] = r
-	}
-	return string(reversed)
-}
-
-func CalcValue(r rune, i int) int {
+func CalcValue(r rune, double bool) int {
 	val := int(r - '0')
-	if i%2 == 0 {
+	if !double {
 		return val
 	}
 
@@ -31,18 +21,19 @@ func CalcValue(r rune, i int) int {
 func Valid(s string) bool {
 
 	s = strings.ReplaceAll(s, " ", "")
-	if len(s) <= 1 {
+	N := len(s)
+	if N <= 1 {
 		return false
 	}
-	reversed := ReverseString(s)
+	doublePosition := N % 2
 
 	var sum int
-	for i, r := range reversed {
+	for i, r := range s {
 		if !unicode.IsDigit(r) {
 			return false
 		}
 
-		sum += CalcValue(r, i)
+		sum += CalcValue(r, i%2 == doublePosition)
 	}
 
 	if sum%10 == 0 {
