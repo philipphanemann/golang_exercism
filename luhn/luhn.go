@@ -25,15 +25,16 @@ func Valid(s string) bool {
 	if N <= 1 {
 		return false
 	}
-	doublePosition := N % 2
+	doublePosition := (N%2 == 0)
 
 	var sum int
-	for i, r := range s {
+	for _, r := range s {
 		if !unicode.IsDigit(r) {
 			return false
 		}
 
-		sum += CalcValue(r, i%2 == doublePosition)
+		sum += CalcValue(r, doublePosition)
+		doublePosition = !doublePosition
 	}
 
 	return sum%10 == 0
