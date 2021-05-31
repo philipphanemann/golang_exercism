@@ -15,11 +15,8 @@ func Square(x int) (square uint64, err error) {
 }
 
 func Total() uint64 {
-	var sum uint64
-	for i := 1; i < 65; i++ {
-		calc, _ := Square(i)
-		sum += calc
-	}
-	return sum
+	var res uint64
+	res = uint64(math.Pow(2, 63))
+	return 2*res - 1
 
 }
