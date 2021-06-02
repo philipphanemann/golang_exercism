@@ -34,3 +34,8 @@ func (t OwnTime) Add(minutes int) OwnTime {
 	m := TimeToMinutes(t) + minutes
 	return MinutesToTime(m)
 }
+
+func (t OwnTime) Subtract(minutes int) OwnTime {
+	m := TimeToMinutes(t) - minutes
+	return MinutesToTime(m)
+}
