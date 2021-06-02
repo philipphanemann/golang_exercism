@@ -10,20 +10,27 @@ type OwnTime struct {
 }
 
 // MinutesToTime returns positive hour and minutes
-func MinutesToTime(m int) (hour int, min int) {
+func MinutesToTime(m int) OwnTime {
 	m %= MinutesPerDay
 	if m < 0 {
 		m = MinutesPerDay + m
 	}
-	return m / base, m % base
+	return OwnTime{m / base, m % base}
 }
 
+func TimeToMinutes(t OwnTime) int {
+	return t.h*base + t.m
+}
 func New(h, m int) OwnTime {
-	totalMinutes := h*base + m
-	h, m = MinutesToTime(totalMinutes)
-	return OwnTime{h, m}
+	totalMinutes := TimeToMinutes(OwnTime{h, m})
+	return MinutesToTime(totalMinutes)
 }
 
 func (t OwnTime) String() string {
 	return fmt.Sprintf("%02d:%02d", t.h, t.m)
+}
+
+func (t OwnTime) Add(minutes int) OwnTime {
+	m := TimeToMinutes(t) + minutes
+	return MinutesToTime(m)
 }
