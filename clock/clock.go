@@ -5,44 +5,38 @@ import "fmt"
 const base int = 60
 const minutesPerDay int = 60 * 24
 
-// OwnTime time with hours and minutes
+// OwnTime time in minutes
 type OwnTime struct {
-	h, m int
+	m int
 }
 
-// MinutesToTime returns positive hour and minutes
-func MinutesToTime(m int) OwnTime {
-	m %= minutesPerDay
-	if m < 0 {
-		m = minutesPerDay + m
+// normalizeMinutes normalizes to Minutes of a day
+func normalizeMinutes(m int) int {
+	if m > 0 {
+		return m % minutesPerDay
 	}
-	return OwnTime{m / base, m % base}
-}
-
-// TimeToMinutes returns total minutes of time
-func TimeToMinutes(t OwnTime) int {
-	return t.h*base + t.m
+	return normalizeMinutes(m + minutesPerDay)
 }
 
 // New returns positive time of time.
 func New(h, m int) OwnTime {
-	totalMinutes := TimeToMinutes(OwnTime{h, m})
-	return MinutesToTime(totalMinutes)
+	totalMinutes := h*base + m
+	return OwnTime{normalizeMinutes(totalMinutes)}
 }
 
 // String formats time output
 func (t OwnTime) String() string {
-	return fmt.Sprintf("%02d:%02d", t.h, t.m)
+	hours := t.m / base
+	minutes := t.m % base
+	return fmt.Sprintf("%02d:%02d", hours, minutes)
 }
 
 // Add adds minutes to time
 func (t OwnTime) Add(minutes int) OwnTime {
-	m := TimeToMinutes(t) + minutes
-	return MinutesToTime(m)
+	return OwnTime{normalizeMinutes(t.m + minutes)}
 }
 
 // Subtract subtracts minutes from time
 func (t OwnTime) Subtract(minutes int) OwnTime {
-	m := TimeToMinutes(t) - minutes
-	return MinutesToTime(m)
+	return OwnTime{normalizeMinutes(t.m - minutes)}
 }

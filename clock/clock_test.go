@@ -29,6 +29,14 @@ import (
 // For some useful guidelines on when to use a value receiver or a pointer
 // receiver see: https://github.com/golang/go/wiki/CodeReviewComments#receiver-type
 
+func TestNormalizeMinutes(t *testing.T) {
+	for _, n := range minutesTests {
+		if got := normalizeMinutes(n.m); got != n.want {
+			t.Fatalf("normalizeMinutes(%d)= %d, want %d", got, n.m, n.want)
+		}
+	}
+
+}
 func TestCreateClock(t *testing.T) {
 	for _, n := range timeTests {
 		if got := New(n.h, n.m); got.String() != n.want {

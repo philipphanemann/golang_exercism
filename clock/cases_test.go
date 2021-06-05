@@ -4,6 +4,16 @@ package clock
 // Commit: b344762 clock: Add test case for exactly negative sixty minutes.
 // Problem Specifications Version: 2.4.0
 
+// normalize minutes
+var minutesTests = []struct {
+	m, want int
+}{
+	{8, 8},                    // nothing to normalize
+	{-15, 60*24 - 15},         // one period back
+	{-15 - 60*24, 60*24 - 15}, //multiple periods back
+	{2*60*24 + 15, 15},        // multiple periods forward
+}
+
 // Create a new clock with an initial time
 var timeTests = []struct {
 	h, m int
