@@ -12,10 +12,11 @@ type OwnTime struct {
 
 // normalizeMinutes normalizes to Minutes of a day
 func normalizeMinutes(m int) int {
-	if m > 0 {
-		return m % minutesPerDay
+	m %= minutesPerDay
+	if m < 0 {
+		return m + minutesPerDay
 	}
-	return normalizeMinutes(m + minutesPerDay)
+	return m
 }
 
 // New returns positive time of time.
