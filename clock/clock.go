@@ -10,19 +10,14 @@ type OwnTime struct {
 	m int
 }
 
-// normalizeMinutes normalizes to Minutes of a day
-func normalizeMinutes(m int) int {
-	m %= minutesPerDay
-	if m < 0 {
-		return m + minutesPerDay
-	}
-	return m
-}
-
 // New returns positive time of time.
 func New(h, m int) OwnTime {
-	totalMinutes := h*base + m
-	return OwnTime{normalizeMinutes(totalMinutes)}
+	m = h*base + m
+	m %= minutesPerDay
+	if m < 0 {
+		return OwnTime{m + minutesPerDay}
+	}
+	return OwnTime{m}
 }
 
 // String formats time output
@@ -34,10 +29,10 @@ func (t OwnTime) String() string {
 
 // Add adds minutes to time
 func (t OwnTime) Add(minutes int) OwnTime {
-	return OwnTime{normalizeMinutes(t.m + minutes)}
+	return New(0, t.m+minutes)
 }
 
 // Subtract subtracts minutes from time
 func (t OwnTime) Subtract(minutes int) OwnTime {
-	return OwnTime{normalizeMinutes(t.m - minutes)}
+	return New(0, t.m-minutes)
 }
