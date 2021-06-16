@@ -20,20 +20,32 @@ func FrequencyGoroutine(s string, c chan FreqMap) {
 	for _, r := range s {
 		m[r]++
 	}
+
 	c <- m
 }
 
 func ConcurrentFrequency(txts []string) FreqMap {
 	counts := FreqMap{}
-	c := make(chan FreqMap, 6)
+	chan_euro := make(chan FreqMap)
+	chan_dutch := make(chan FreqMap)
+	chan_us := make(chan FreqMap)
 
-	for _, txt := range txts {
-		go FrequencyGoroutine(txt, c)
+	for i, txt := range txts {
+		switch i {
+		case 0:
+			go FrequencyGoroutine(txt, chan_euro)
+		case 1:
+			go FrequencyGoroutine(txt, chan_dutch)
+		case 2:
+			go FrequencyGoroutine(txt, chan_us)
+		}
 	}
-	x, y, z := <-c, <-c, <-c
+
+	x, y, z := <-chan_euro, <-chan_dutch, <-chan_us
 	for i, count := range x {
 		counts[i] += count
 	}
+
 	for i, count := range y {
 		counts[i] += count
 	}
