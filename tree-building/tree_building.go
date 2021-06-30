@@ -2,18 +2,22 @@ package tree
 
 import (
 	"errors"
+	"fmt"
 	"sort"
 )
 
+//Record tracked
 type Record struct {
 	ID, Parent int
 }
 
+//Node of record tree
 type Node struct {
 	ID       int
 	Children []*Node
 }
 
+//Build creates tree from records
 func Build(records []Record) (*Node, error) {
 
 	if len(records) == 0 {
@@ -29,13 +33,32 @@ func Build(records []Record) (*Node, error) {
 		return records[i].ID < records[j].ID
 	})
 
-	for _, r := range records {
-		nodeTable[r.ID] = &Node{ID: r.ID}
+	for i, r := range records {
 
-		if r.ID == 0 && r.Parent > 0 {
-			return &Node{}, errors.New("root node shall not have parent")
+		// checking for errors
+		if _, ok := nodeTable[r.ID]; ok {
+			return nil, fmt.Errorf("ID %d should occur only once", r.ID)
 		}
 
+		if r.ID == 0 {
+			if r.Parent > 0 {
+				return nil, fmt.Errorf("Parent ID %d greater than root node", r.Parent)
+			}
+		} else {
+
+			if i == 0 {
+				return nil, errors.New("no root node provided")
+			}
+			if _, ok := nodeTable[r.ID-1]; !ok {
+				return nil, fmt.Errorf("ID %d missing", r.ID-1)
+			}
+			if r.ID <= r.Parent {
+				return nil, fmt.Errorf("ID %d can not be placed before or equal ID %d", r.ID, r.Parent)
+			}
+		}
+		//end errors
+
+		nodeTable[r.ID] = &Node{ID: r.ID}
 		if r.ID == 0 {
 			root = nodeTable[0]
 		} else {

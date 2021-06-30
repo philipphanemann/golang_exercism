@@ -223,7 +223,6 @@ func (n Node) String() string {
 func TestMakeTreeSuccess(t *testing.T) {
 	for _, tt := range successTestCases {
 		t.Run(tt.name, func(t *testing.T) {
-			fmt.Printf("\"%s\" started\n", tt.name)
 			actual, err := Build(tt.input)
 			if err != nil {
 				var _ error = err
@@ -231,11 +230,8 @@ func TestMakeTreeSuccess(t *testing.T) {
 					tt.name, err)
 			}
 			if !reflect.DeepEqual(actual, tt.expected) {
-				fmt.Printf("\"%s\" has NOT passed\n", tt.name)
 				t.Fatalf("Build for test case %q returned %s but was expected to return %s.",
 					tt.name, actual, tt.expected)
-			} else {
-				fmt.Printf("\"%s\" has passed\n", tt.name)
 			}
 		})
 	}
