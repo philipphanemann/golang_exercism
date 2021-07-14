@@ -3,13 +3,11 @@
 package robotname
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestNameValid(t *testing.T) {
 	n := New().getName(t, false)
-	fmt.Println(n)
 	if !namePat.MatchString(n) {
 		t.Errorf(`Invalid robot name %q, want form "AA###".`, n)
 	}
@@ -19,7 +17,6 @@ func TestNameSticks(t *testing.T) {
 	r := New()
 	n1 := r.getName(t, false)
 	n2 := r.getName(t, true)
-	fmt.Printf("second test \nn1: %s, n2: %s", n1, n2)
 	if n2 != n1 {
 		t.Errorf(`Robot name changed.  Now %s, was %s.`, n2, n1)
 	}

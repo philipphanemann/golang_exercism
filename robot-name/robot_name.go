@@ -5,36 +5,26 @@ import (
 	"time"
 )
 
-var robots = make(map[*Robot]string)
-
 // Robot type
 type Robot struct {
-}
-
-//randInt produces a random number within the interval [min, max)
-//i.e. to represent the range for AB max should be choosen to be 67
-func randInt(min int, max int) int {
-	rand.Seed(time.Now().UnixNano())
-	return min + rand.Intn(max-min)
+	name string
 }
 
 // Name creates a robot name
 func (r *Robot) Name() (string, error) {
-	if val, ok := robots[r]; ok {
-		return val, nil
-	} else {
-		s := string([]byte{
-			byte(randInt(65, 91)),
-			byte(randInt(65, 91)),
-			byte(randInt(48, 58)),
-			byte(randInt(48, 58)),
-			byte(randInt(48, 58)),
-		})
-
-		robots[r] = s
-		return s, nil
+	rand.Seed(time.Now().UnixNano())
+	if r.name == "" {
+		r.name = string([]rune{R('A', 25), R('A', 25), R('0', 9), R('0', 9), R('0', 9)})
 	}
+	return r.name, nil
 }
 
 // Reset currently placeholder to compile
-func (r *Robot) Reset() {}
+func (r *Robot) Reset() {
+	r.name = ""
+}
+
+// R returns a random rune in range r starting at offset o.
+func R(o, r int) rune {
+	return rune(rand.Intn(r) + o)
+}
